@@ -1,9 +1,8 @@
 # Use a slim Python base image for smaller size
-FROM python:3.10-slim-buster
+FROM python:3.8.10
 
-# Set environment variables
-ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE 1
+# Install necessary build tools and Python development headers
+RUN apt-get update && apt-get install -y python3-dev build-essential
 
 # Set the working directory inside the container
 WORKDIR /app/backend
@@ -21,6 +20,7 @@ RUN apt-get update \
 
 # Copy requirements.txt and install Python dependencies
 COPY requirements.txt .
+
 RUN pip install -r requirements.txt
 
 # Copy the entire backend project into the container

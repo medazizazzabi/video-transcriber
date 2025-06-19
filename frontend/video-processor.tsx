@@ -9,8 +9,8 @@ import { CheckCircle2, XCircle, Loader2, Clock, Upload, Play, RotateCcw } from "
 import { Card, CardContent } from "@/components/ui/card"
 
 // replace these URLs with your actual backend URLs
-const WEBSOCKET_URL = "ws://35.222.228.97:8000/ws/progress/"
-const UPLOAD_API_URL = "http://35.222.228.97:8000/api/upload-video/"
+const WEBSOCKET_URL = "ws://34.46.223.48:8000/ws/progress/"
+const UPLOAD_API_URL = "http://34.46.223.48:8000/api/upload-video/"
 
 
 // Define the structure for a processing step

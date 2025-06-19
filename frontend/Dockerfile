@@ -3,17 +3,15 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-# If you use npm, use package-lock.json instead of yarn.lock
-# COPY package.json package-lock.json ./
+COPY package.json package-lock.json ./ # Use package-lock.json for npm
 
-RUN yarn install --frozen-lockfile
+RUN npm ci # Use npm ci for clean and fast install in CI/CD/Docker
 
 COPY . .
 
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED 1 # Optional: Disable Next.js telemetry during build
 
-RUN yarn build
+RUN npm run build # This is the critical step!
 
 # Stage 2: Run the Next.js application
 FROM node:20-alpine AS runner
@@ -35,4 +33,4 @@ ENV PORT 3000
 EXPOSE 3000
 
 # Command to start the Next.js production server
-CMD ["yarn", "start"] # Or ["npm", "start"]
+CMD ["npm", "start"]

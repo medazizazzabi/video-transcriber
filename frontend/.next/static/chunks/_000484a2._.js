@@ -271,8 +271,8 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 // replace these URLs with your actual backend URLs
-const WEBSOCKET_URL = "ws://localhost:8000/ws/progress/";
-const UPLOAD_API_URL = "http://localhost:8000/api/upload-video/";
+const WEBSOCKET_URL = "ws://34.46.223.48:8000/ws/progress/";
+const UPLOAD_API_URL = "http://34.46.223.48:8000/api/upload-video/";
 function VideoProcessor() {
     _s();
     const [selectedFile, setSelectedFile] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);

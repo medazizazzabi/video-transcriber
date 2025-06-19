@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build: ./backend
@@ -8,12 +6,12 @@ services:
     volumes:
       - ./backend:/app/backend
       - backend_media:/app/backend/media 
-    environment:
-      - OPENAI_API_KEY=your_openai_api_key_here
-      - AWS_ACCESS_KEY_ID=your_aws_access_key_id_here
-      - AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key_here
-      - AWS_S3_REGION_NAME=your_s3_region_e.g._us-east-1
-      - AWS_S3_BUCKET_NAME=your_s3_bucket_name_here
+    # environment:
+    #   - OPENAI_API_KEY=your_openai_api_key_here
+    #   - AWS_ACCESS_KEY_ID=your_aws_access_key_id_here
+    #   - AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key_here
+    #   - AWS_S3_REGION_NAME=your_s3_region_e.g._us-east-1
+    #   - AWS_S3_BUCKET_NAME=your_s3_bucket_name_here
     depends_on:
       - frontend
   frontend:
@@ -26,8 +24,7 @@ services:
     environment:
       - NEXT_PUBLIC_UPLOAD_API_URL=http://34.46.223.48:8000/api/upload-video/ # Change to backend service name if not mapping ports
       - NEXT_PUBLIC_WEBSOCKET_URL=ws://34.46.223.48:8000/ws/progress/ # Change to backend service name if not mapping ports
-    depends_on:
-      - backend
+
 
 volumes:
   backend_media:

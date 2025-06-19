@@ -1,38 +1,38 @@
 # Stage 1: Build the Next.js application
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package.json and yarn.lock/package-lock.json to leverage Docker cache
-COPY package.json yarn.lock* ./
-# OR for npm: COPY package.json package-lock.json ./
+COPY package.json yarn.lock ./
+# If you use npm, use package-lock.json instead of yarn.lock
+# COPY package.json package-lock.json ./
 
-# Install dependencies (using yarn as an example, adjust for npm if needed)
-RUN yarn install --frozen-lockfile --production=false
-# OR for npm: RUN npm ci
+RUN yarn install --frozen-lockfile
 
-# Copy the rest of the application code
 COPY . .
 
-# Build the Next.js application
+ENV NEXT_TELEMETRY_DISABLED 1
+
 RUN yarn build
-# OR for npm: RUN npm run build
 
 # Stage 2: Run the Next.js application
-FROM node:18-alpine
+FROM node:20-alpine AS runner
 
-# Set working directory
 WORKDIR /app
 
-# Copy built application and production dependencies from the builder stage
+# Copy necessary files from the builder stage
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/public ./public
-COPY package.json ./
+COPY --from=builder /app/package.json ./package.json
 
-# Expose the port Next.js will run on
+# If you have a public directory with static assets, copy it too
+COPY public ./public
+
+# Set the port for the Next.js server
+ENV PORT 3000
+
+# Expose the port
 EXPOSE 3000
 
-# Command to run the Next.js production server
-CMD ["yarn", "start"]
-# OR for npm: CMD ["npm", "start"]
+# Command to start the Next.js production server
+CMD ["yarn", "start"] # Or ["npm", "start"]
